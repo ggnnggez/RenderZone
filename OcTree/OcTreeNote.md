@@ -1,7 +1,7 @@
 # OcTree Note
 
 ### 问题引入
-现有一个巨大的场景，场景内有数量巨大的GameObject，且每个GameObject的Mesh各不相同。需求是付出能够接受的性能，我们需要知道每一帧场景内有哪些GameOject相交。
+现有一个巨大的场景，场景内有数量巨大的GameObject，且每个GameObject的Mesh各不相同。需求是付出能够接受的性能，我们需要知道每一帧场景内有哪些GameObject相交。
 ![问题附图](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-48142200-1389658066.png)
 ##### 1.暴力检测
 ```c#
