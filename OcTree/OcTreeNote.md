@@ -22,8 +22,7 @@ foreach(gameObject myObject in ObjList)
 
 在遇到碰撞检测方面的性能瓶颈时可以考虑下面几种方法去优化:
 
-1. 检查碰撞检测算法内是否包含了大量的`Sqrt()`方法，由于大部分的原生
-的开方方法都是使用牛顿迭代法来做，性能消耗较大。特别是计算两个对象距离时，要使用距离的平方而不是平方根来做。
+1. 检查碰撞检测算法内是否包含了大量的`Sqrt()`方法，由于大部分的原生的开方方法都是使用牛顿迭代法来做，性能消耗较大。特别是计算两个对象距离时，要使用距离的平方而不是平方根来做。
 2. 是否能够减少参与计算碰撞检测的对象？
    将那些运动确定的且不会与其他对象发生碰撞的对象不做碰撞检测，比如将对象分为静止对象列表与运动对象列表，只对运动对象列表做碰撞检测。
 3. 建立碰撞检测的优先级……
@@ -47,6 +46,60 @@ foreach(gameObject myObject in ObjList)
 3.  如果区域内不包含任何对象，则不把这块区域放入树中。
 如果以上述规则为依据，为二维场景进行划分，结果如下图
 ![四叉树](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-51009600-1389735662.png)
+
+### 2.2 **构建八叉树**
+所以通过上面二维平面的四叉树推导，我们现在需要把理论推广到三维空间中去
+下面是GameDev上对节点类的描述与源码
+1. Each node has a bounding region which defines the enclosing region
+2. Each node has a reference to the parent node
+3. Contains an array of eight child nodes (use arrays for code simplicity and cache performance)
+4. Contains a list of objects contained within the current enclosing region
+5. I use a byte-sized bitmask for figuring out which child nodes are actively being used (the optimization benefits at the cost of additional complexity is somewhat debatable)
+6. I use a few static variables to indicate the state of the tree
+
+```C#
+public class OctTree
+{ 
+	BoundingBox m_region;
+	List m_objects; 
+	/// 
+	/// These are items which we're waiting to insert into the data structure. 
+	/// We want to accrue as many objects in here as possible before we inject them into the tree. This is slightly more cache friendly. 
+	/// 
+	
+	static Queue m_pendingInsertion = new Queue(); 
+	
+	/// 
+	/// These are all of the possible child octants for this node in the tree. 
+	/// 
+	OctTree[] m_childNode = new OctTree[8]; 
+	
+	///
+	/// This is a bitmask indicating which child nodes are actively being used. 
+	/// It adds slightly more complexity, but is faster for performance since there is only one comparison instead of 8. 
+	///
+	byte m_activeNodes = 0;
+	
+	///
+	/// The minumum size for enclosing region is a 1x1x1 cube. 
+	///
+	const int MIN_SIZE = 1; 
+	
+	///
+	/// this is how many frames we'll wait before deleting an empty tree branch. Note that this is not a constant. The maximum lifespan doubles
+	/// every time a node is reused, until it hits a hard coded constant of 64 
+	/// 
+	int m_maxLifespan = 8; // 
+	int m_curLife = -1; //this is a countdown time showing how much time we have left to live 
+	
+	/// 
+	/// A reference to the parent node is nice to have when we're trying to do a tree update. 
+	/// 
+	OctTree _parent; 
+	static bool m_treeReady = false; //the tree has a few objects which need to be inserted before it is complete 
+	static bool m_treeBuilt = false; //there is no pre-existing tree yet. 
+}
+```
 
 未完待续
 
