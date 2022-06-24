@@ -47,7 +47,7 @@ foreach(gameObject myObject in ObjList)
 如果以上述规则为依据，为二维场景进行划分，结果如下图
 ![四叉树](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-51009600-1389735662.png)
 
-### 2.2 **构建八叉树**
+### 2.2 **浅谈八叉树**
 所以通过上面二维平面的四叉树推导，我们现在需要把理论推广到三维空间中去
 下面是GameDev上对节点类的描述与源码
 1. Each node has a bounding region which defines the enclosing region
@@ -101,6 +101,116 @@ public class OctTree
 }
 ```
 
-未完待续
+### 2.3 八叉树的初始化
+1. 确认整棵树所包含的范围。在初始化整棵树所包围的空间时我们需要做出下面两条设计决策
+- 在对象超出所包含的范围时，我们应该怎么做
+- 我们应该把包围的空间定义成什么样
+  
+GamDev上提供的构造函数：
+```C#
+private OctTree(BoundingBox region, List objList) 
+{ 
+	m_region = region; 
+	m_objects = objList; 
+	m_curLife = -1; 
+} 
+
+public OctTree() 
+{ 
+	m_objects = new List(); 
+	m_region = new BoundingBox(Vector3.Zero, Vector3.Zero); 
+	m_curLife = -1; 
+}
+
+public OctTree(BoundingBox region) 
+{ 
+	m_region = region;
+	m_objects = new List(); 
+	m_curLife = -1; 
+} 
+```
+由于下文涉及到BoundingBox的应用，所以这里给出《Character Animation With Direct3D》(这本书在我的icloud里面有),中给出的AABB类的定义。下图中蓝色的向量表示两个位于体对角线上的两个点相减，`Vector3 dimensions = m_region.MAX - m_region.MIN`从而得出`dimensions`。
+![AABB_max-_min](AABB体对角线.png)
+
+```C++
+class AABB
+{
+public:
+	AABB(D3DXVECTOR3 max, D3DVECTOR3 min)
+	{
+		m_max = max;
+		m_min = min;
+	}	
+
+	bool Intersect(D3DVECTOR3 &P)
+	{
+		if(p.x < m_min.x || p.x > m_max.x)return false;
+		if(p.y < m_min.y || p.y > m_max.y)return false;
+		if(p.z < m_min.z || p.z > m_max.z)return false;
+		return true;
+	}
+
+public:
+	/*
+	* 这里的m_max,m_min 与下文中的m_region.MAX,m_region.MIN对应
+	* m_max与m_min分别代表体对角线的两个点
+	*/
+	D3DVECTOR3 m_max,m_min; 
+}
+```
+
+2. 要了解[Lazy initialization](https://en.wikipedia.org/wiki/Lazy_initialization#C#)。要尽量拖延内存的分配和构造树，知道我们不得不去做这件的时候。比如果说在用户发出手动插入节点的请求。
+
+### 2.4 `BulidTree()`
+在调用`OctTree(BoundingBox region, List objList)`后能够确定了要进行空间划分的空间和在空间中的对象列表。
+开始正式构建OcTree的逻辑步骤
+1. 判断当前要生成的节点是否为叶子节点。
+```c#
+// 上文有说明八叉树叶子节点的定义
+if (m_objects.Count <= 1)
+	return;
+```
+2. 获取在初始化时(调用构造函数时)传入的`objList`与`region`，分别获取场景中所包含的对象和场景的大小。
+```c#
+Vector3 dimensions = m_region.MAX - m_region.MIN;
+
+// 若构造时没有传入region
+if (dimensions == Vector3.Zero)
+{
+	// To create a cube which perfect encloses every single object in the game world.
+	FindEnclosingCube(); 
+
+	dimensions = m_region.Max - m_region.Min;
+}
+
+// 记住要检查创造出的box是否符合上面规定的MIN_SIZE
+if (dimensions.X <= MIN_SIZE && dimensions.Y <= MIN_SIZE && dimensions.Z <=MIN_SIZE)
+{
+	return;
+}
+```
+
+3. 分割空间(<font size = "1">下面的代码对划分后空间所对应的BoundingBox进行定义，理解没有什么难度，就不多做介绍。</font>)
+
+```C#
+Vector3 half = dimensions/2.0f;
+Vector3 center = m_region.Min + half;
+BoundingBox[] octant = new BoundingBox[8];
+
+octant[0] = new BoundingBox(m_region.Min,center); // 左下角
+octant[1] = new BoundingBox(new Vector3(center.X, m_region.Min.Y, m_region.Min.Z), new Vector3(m_region.Max.X, center.Y, center.Z));
+octant[2] = new BoundingBox(new Vector3(center.X, m_region.Min.Y, center.Z), new Vector3(m_region.Max.X, center.Y, m_region.Max.Z));
+octant[3] = new BoundingBox(new Vector3(m_region.Min.X, m_region.Min.Y, center.Z), new Vector3(center.X, center.Y, m_region.Max.Z));
+octant[4] = new BoundingBox(new Vector3(m_region.Min.X, center.Y, m_region.Min.Z), new Vector3(center.X, m_region.Max.Y, center.Z));
+octant[5] = new BoundingBox(new Vector3(center.X, center.Y, m_region.Min.Z), new Vector3(m_region.Max.X, m_region.Max.Y, center.Z));
+octant[6] = new BoundingBox(center, m_region.Max);
+octant[7] = new BoundingBox(new Vector3(m_region.Min.X, center.Y, center.Z), new Vector3(center.X, m_region.Max.Y, m_region.Max.Z));
+```
+
+4. 分配对象至节点
+
+```C#
+
+```
 
 ![2022.6.22](https://www.reactiongifs.us/wp-content/uploads/2013/10/nuh_uh_conan_obrien.gif)
