@@ -4,7 +4,7 @@
 现有一个巨大的场景，场景内有数量巨大的GameObject，且每个GameObject的Mesh各不相同。需求是付出能够接受的性能，让我们知道每一帧场景内有哪些GameObject相交。
 ![问题附图](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-48142200-1389658066.png)
 
-##### **1.暴力检测**
+### **1.暴力检测**
 ```c#
 foreach(gameObject myObject in ObjList)
 {
@@ -22,14 +22,18 @@ foreach(gameObject myObject in ObjList)
 
 在遇到碰撞检测方面的性能瓶颈时可以考虑下面几种方法去优化:
 
-1. 检查碰撞检测算法内是否包含了大量的`Sqrt()`方法，由于大部分的原生的开方方法都是使用牛顿迭代法来做，性能消耗较大。特别是计算两个对象距离时，要使用距离的平方而不是平方根来做。
-2. 是否能够减少参与计算碰撞检测的对象？
+>1. **检查碰撞检测算法内是否包含了大量的`Sqrt()`方法**，由于大部分的原生的开方方法都是使用牛顿迭代法来做，性能消耗较大。特别是计算两个对象距离时，要使用距离的平方而不是平方根来做。
+
+>2. **是否能够减少参与计算碰撞检测的对象？**
    将那些运动确定的且不会与其他对象发生碰撞的对象不做碰撞检测，比如将对象分为静止对象列表与运动对象列表，只对运动对象列表做碰撞检测。
-3. 建立碰撞检测的优先级……
-4. **使用空间划分方法**
+
+>3. **建立碰撞检测的优先级**， 。
+
+>4. **使用空间划分方法**
 
 
-### **2.基于空间划分方法的检测**
+### **2.基于空间划分方法的检测**<font size = "2">(思考 二分法->四叉树->八叉树 随着维度的提高，有哪些东西并没有发生变化，试着将这些东西提炼出来，总结成解决对应问题的普适模型)</font>
+
 还是上述的那个场景，我们把场景从中间一分为二，根据对象所处的空间，我们可以把对象放入三个列表中，处于左半边的对象放在列表A中，处于右半边的对象放在列表B中，被划分线穿过的对象我们放在列表C中。
 ![空间划分_fig01](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-11639700-1389661386.png)
 
@@ -47,7 +51,7 @@ foreach(gameObject myObject in ObjList)
 如果以上述规则为依据，为二维场景进行划分，结果如下图
 ![四叉树](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-51009600-1389735662.png)
 
-### 2.2 **浅谈八叉树**
+### 2.2 **八叉树简介**
 所以通过上面二维平面的四叉树推导，我们现在需要把理论推广到三维空间中去
 下面是GameDev上对节点类的描述与源码
 1. Each node has a bounding region which defines the enclosing region
@@ -101,7 +105,7 @@ public class OctTree
 }
 ```
 
-### 2.3 八叉树的初始化
+### 2.3 ``Init()``
 1. 确认整棵树所包含的范围。在初始化整棵树所包围的空间时我们需要做出下面两条设计决策
 - 在对象超出所包含的范围时，我们应该怎么做
 - 我们应该把包围的空间定义成什么样
@@ -161,7 +165,7 @@ public:
 
 2. 要了解[Lazy initialization](https://en.wikipedia.org/wiki/Lazy_initialization#C#)。要尽量拖延内存的分配和构造树，知道我们不得不去做这件的时候。比如果说在用户发出手动插入节点的请求。
 
-### 2.4 `BulidTree()`
+### 2.4 `BuildTree()`
 在调用`OctTree(BoundingBox region, List objList)`后能够确定了要进行空间划分的空间和在空间中的对象列表。
 开始正式构建OcTree的逻辑步骤
 1. 判断当前要生成的节点是否为叶子节点。
@@ -190,7 +194,7 @@ if (dimensions.X <= MIN_SIZE && dimensions.Y <= MIN_SIZE && dimensions.Z <=MIN_S
 }
 ```
 
-3. 分割空间(<font size = "1">下面的代码对划分后空间所对应的BoundingBox进行定义，理解没有什么难度，就不多做介绍。</font>)
+3. 分割空间<font size = "1">(下面的代码对划分后空间所对应的BoundingBox进行定义，理解没有什么难度，就不多做介绍。)</font>
 
 ```C#
 Vector3 half = dimensions/2.0f;
@@ -208,9 +212,75 @@ octant[7] = new BoundingBox(new Vector3(m_region.Min.X, center.Y, center.Z), new
 ```
 
 4. 分配对象至节点
-
+   分配过程使用到三个容器，分别是`m_object` `octList` `disList`，`m_object`中包含了所有`m_region`中所包含的对象，`octList`中包含了该节点下所包含的对象，`disList`是一个中间容器，记录将要从m_object中剔除的对象。
 ```C#
-
+// 遍历m_object
+foreach (Physical obj in m_objects)
+{
+	if (obj.BoundingBox.Min != obj.BoundingBox.Max)
+	{
+		for (int a = 0; a < 8; a++)
+		{
+			// 若这个对象被对应octant包含，则放入octList和deList中，并开始开始检测下一个m_object中的对象
+			if (octant[a].Contains(obj.BoundingBox) == ContainmentType.Contains)
+			{
+				octList[a].Add(obj);
+				delist.Add(obj);
+				break;
+			}
+		}
+	}
 ```
 
+在完成`octList`构建后，从`m_object`中剔除disList中记录的对象
+```C#
+foreach (Physical obj in delist)
+	m_objects.Remove(obj);
+```
+
+上述步骤已经阐述清楚树节点的构建逻辑，接下来需要使用相同逻辑进行迭代，继续向下生成树
+注意理解`CreateNode()`方法存在的必要性，理解`m_activeNodes`。
+```C#
+{
+	// ......
+	// 完成创建父节点
+
+	// 开始迭代创建子节点
+	for (int a = 0; a < 8; a++)
+	{
+		if (octList[a].Count != 0)
+		{
+			m_childNode[a] = CreateNode(octant[a], octList[a]);
+			m_activeNodes |= (byte)(1 << a);
+			m_childNode[a].BuildTree();
+		}
+	}
+	
+	m_treeBuilt = true;
+	m_treeReady = true;
+}
+
+// 合法性检测
+private OctTree CreateNode(BoundingBox region, List objList) //complete & tested
+{
+	if (objList.Count == 0)
+		return null;
+	OctTree ret = new OctTree(region, objList);
+	ret._parent = this;
+	return ret;
+}
+```
+
+### 2.5 `Update()`
+回头看看我们的需求，要求每一帧都需要知道场景内对象的相交情况，故肯定需要我们的树在每一帧对树进行更新。
+
+现在有两个方案：
+- 将上一帧的所构建的树丢弃，每一帧重新生成一个新的树
+- 以上一帧所构建的树为基础，以这一帧对象的位置为依据，对树的分支进行更新
+
+如果只是数量较少的对象进行了运动，选择去构建整颗树会花费太多的性能去构建一颗大部分分支都重复的树，或许在实际项目中我们需要将**两种方案混合使用**，但在这里我们着重介绍第二种方案。
+
+
+<!--
 ![2022.6.22](https://www.reactiongifs.us/wp-content/uploads/2013/10/nuh_uh_conan_obrien.gif)
+-->
