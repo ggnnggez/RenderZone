@@ -1,0 +1,577 @@
+<!DOCTYPE html><html><head>
+      <title>OcTreeNote</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:///c:\Users\admin\.vscode\extensions\shd101wyy.markdown-preview-enhanced-0.6.3\node_modules\@shd101wyy\mume\dependencies\katex\katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
+
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
+
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="octtree-note">OctTree Note</h1>
+
+<h3 class="mume-header" id="%E9%97%AE%E9%A2%98%E5%BC%95%E5%85%A5"><strong>&#x95EE;&#x9898;&#x5F15;&#x5165;</strong></h3>
+
+<p>&#x73B0;&#x6709;&#x4E00;&#x4E2A;&#x5DE8;&#x5927;&#x7684;&#x573A;&#x666F;&#xFF0C;&#x573A;&#x666F;&#x5185;&#x6709;&#x6570;&#x91CF;&#x5DE8;&#x5927;&#x7684;GameObject&#xFF0C;&#x4E14;&#x6BCF;&#x4E2A;GameObject&#x7684;Mesh&#x5404;&#x4E0D;&#x76F8;&#x540C;&#x3002;&#x9700;&#x6C42;&#x662F;&#x4ED8;&#x51FA;&#x80FD;&#x591F;&#x63A5;&#x53D7;&#x7684;&#x6027;&#x80FD;&#xFF0C;&#x8BA9;&#x6211;&#x4EEC;&#x77E5;&#x9053;&#x6BCF;&#x4E00;&#x5E27;&#x573A;&#x666F;&#x5185;&#x6709;&#x54EA;&#x4E9B;GameObject&#x76F8;&#x4EA4;&#x3002;<br>
+<img src="https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-48142200-1389658066.png" alt="&#x95EE;&#x9898;&#x9644;&#x56FE;"></p>
+<h3 class="mume-header" id="1%E6%9A%B4%E5%8A%9B%E6%A3%80%E6%B5%8B"><strong>1.&#x66B4;&#x529B;&#x68C0;&#x6D4B;</strong></h3>
+
+<pre data-role="codeBlock" data-info="c#" class="language-c#"><code>foreach(gameObject myObject in ObjList)
+{
+	foreach(gameObject otherObject in ObjList) 
+	{ 
+		if(myObject == otherObject) continue; //avoid self collision check 
+		if(myObject.CollidesWith(otherObject)) 
+		{ 
+		//code to handle the collision 
+		} 
+	} 
+}
+</code></pre><p>&#x867D;&#x7136;&#x662F;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>&#x7684;&#x590D;&#x6742;&#x5EA6;&#xFF0C;&#x4F46;&#x662F;&#x5728;&#x573A;&#x666F;&#x4E2D;&#x5BF9;&#x8C61;&#x8F83;&#x5C11;&#x7684;&#x65F6;&#x5019;&#x8FD8;&#x662F;&#x53EF;&#x4EE5;&#x7528;&#x7684;&#x3002;</p>
+<h3 class="mume-header" id="2%E5%B8%B8%E8%A7%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF">2.&#x5E38;&#x89C4;&#x4F18;&#x5316;&#x601D;&#x8DEF;</h3>
+
+<p>&#x5728;&#x9047;&#x5230;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x65B9;&#x9762;&#x7684;&#x6027;&#x80FD;&#x74F6;&#x9888;&#x65F6;&#x53EF;&#x4EE5;&#x8003;&#x8651;&#x4E0B;&#x9762;&#x51E0;&#x79CD;&#x65B9;&#x6CD5;&#x53BB;&#x4F18;&#x5316;:</p>
+<blockquote>
+<ol>
+<li><strong>&#x68C0;&#x67E5;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x7B97;&#x6CD5;&#x5185;&#x662F;&#x5426;&#x5305;&#x542B;&#x4E86;&#x5927;&#x91CF;&#x7684;<code>Sqrt()</code>&#x65B9;&#x6CD5;</strong>&#xFF0C;&#x7531;&#x4E8E;&#x5927;&#x90E8;&#x5206;&#x7684;&#x539F;&#x751F;&#x7684;&#x5F00;&#x65B9;&#x65B9;&#x6CD5;&#x90FD;&#x662F;&#x4F7F;&#x7528;&#x725B;&#x987F;&#x8FED;&#x4EE3;&#x6CD5;&#x6765;&#x505A;&#xFF0C;&#x6027;&#x80FD;&#x6D88;&#x8017;&#x8F83;&#x5927;&#x3002;&#x7279;&#x522B;&#x662F;&#x8BA1;&#x7B97;&#x4E24;&#x4E2A;&#x5BF9;&#x8C61;&#x8DDD;&#x79BB;&#x65F6;&#xFF0C;&#x8981;&#x4F7F;&#x7528;&#x8DDD;&#x79BB;&#x7684;&#x5E73;&#x65B9;&#x800C;&#x4E0D;&#x662F;&#x5E73;&#x65B9;&#x6839;&#x6765;&#x505A;&#x3002;</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="2">
+<li><strong>&#x662F;&#x5426;&#x80FD;&#x591F;&#x51CF;&#x5C11;&#x53C2;&#x4E0E;&#x8BA1;&#x7B97;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x7684;&#x5BF9;&#x8C61;&#xFF1F;</strong><br>
+&#x5C06;&#x90A3;&#x4E9B;&#x8FD0;&#x52A8;&#x786E;&#x5B9A;&#x7684;&#x4E14;&#x4E0D;&#x4F1A;&#x4E0E;&#x5176;&#x4ED6;&#x5BF9;&#x8C61;&#x53D1;&#x751F;&#x78B0;&#x649E;&#x7684;&#x5BF9;&#x8C61;&#x4E0D;&#x505A;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#xFF0C;&#x6BD4;&#x5982;&#x5C06;&#x5BF9;&#x8C61;&#x5206;&#x4E3A;&#x9759;&#x6B62;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#x4E0E;&#x8FD0;&#x52A8;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#xFF0C;&#x53EA;&#x5BF9;&#x8FD0;&#x52A8;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#x505A;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x3002;</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="3">
+<li><strong>&#x5EFA;&#x7ACB;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x7684;&#x4F18;&#x5148;&#x7EA7;</strong>&#xFF0C; &#x3002;</li>
+</ol>
+</blockquote>
+<blockquote>
+<ol start="4">
+<li><strong>&#x4F7F;&#x7528;&#x7A7A;&#x95F4;&#x5212;&#x5206;&#x65B9;&#x6CD5;</strong></li>
+</ol>
+</blockquote>
+<h3 class="mume-header" id="3%E5%9F%BA%E4%BA%8E%E7%A9%BA%E9%97%B4%E5%88%92%E5%88%86%E6%96%B9%E6%B3%95%E7%9A%84%E6%A3%80%E6%B5%8Bfont-size-2%E4%BA%8C%E5%88%86%E6%B3%95-%E5%9B%9B%E5%8F%89%E6%A0%91-%E5%85%AB%E5%8F%89%E6%A0%91-%E9%9A%8F%E7%9D%80%E7%BB%B4%E5%BA%A6%E7%9A%84%E6%8F%90%E9%AB%98%E5%93%AA%E4%BA%9B%E6%80%9D%E6%83%B3%E6%B2%A1%E6%9C%89%E5%8F%91%E7%94%9F%E5%8F%98%E5%8C%96%E5%8F%AF%E4%BB%A5%E5%B0%9D%E8%AF%95%E6%8F%90%E7%82%BC%E5%87%BA%E6%9D%A5%E6%80%BB%E7%BB%93%E6%88%90%E8%A7%A3%E5%86%B3%E5%AF%B9%E5%BA%94%E9%97%AE%E9%A2%98%E7%9A%84%E6%99%AE%E9%80%82%E6%A8%A1%E5%9E%8Bfont"><strong>3.&#x57FA;&#x4E8E;&#x7A7A;&#x95F4;&#x5212;&#x5206;&#x65B9;&#x6CD5;&#x7684;&#x68C0;&#x6D4B;</strong><font size="2">(&#x4E8C;&#x5206;&#x6CD5; =&gt; &#x56DB;&#x53C9;&#x6811; =&gt; &#x516B;&#x53C9;&#x6811; &#x968F;&#x7740;&#x7EF4;&#x5EA6;&#x7684;&#x63D0;&#x9AD8;&#xFF0C;&#x54EA;&#x4E9B;&#x601D;&#x60F3;&#x6CA1;&#x6709;&#x53D1;&#x751F;&#x53D8;&#x5316;&#xFF0C;&#x53EF;&#x4EE5;&#x5C1D;&#x8BD5;&#x63D0;&#x70BC;&#x51FA;&#x6765;&#xFF0C;&#x603B;&#x7ED3;&#x6210;&#x89E3;&#x51B3;&#x5BF9;&#x5E94;&#x95EE;&#x9898;&#x7684;&#x666E;&#x9002;&#x6A21;&#x578B;)</font></h3>
+
+<p>&#x8FD8;&#x662F;&#x4E0A;&#x8FF0;&#x7684;&#x90A3;&#x4E2A;&#x573A;&#x666F;&#xFF0C;&#x6211;&#x4EEC;&#x628A;&#x573A;&#x666F;&#x4ECE;&#x4E2D;&#x95F4;&#x4E00;&#x5206;&#x4E3A;&#x4E8C;&#xFF0C;&#x6839;&#x636E;&#x5BF9;&#x8C61;&#x6240;&#x5904;&#x7684;&#x7A7A;&#x95F4;&#xFF0C;&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x628A;&#x5BF9;&#x8C61;&#x653E;&#x5165;&#x4E09;&#x4E2A;&#x5217;&#x8868;&#x4E2D;&#xFF0C;&#x5904;&#x4E8E;&#x5DE6;&#x534A;&#x8FB9;&#x7684;&#x5BF9;&#x8C61;&#x653E;&#x5728;&#x5217;&#x8868;A&#x4E2D;&#xFF0C;&#x5904;&#x4E8E;&#x53F3;&#x534A;&#x8FB9;&#x7684;&#x5BF9;&#x8C61;&#x653E;&#x5728;&#x5217;&#x8868;B&#x4E2D;&#xFF0C;&#x88AB;&#x5212;&#x5206;&#x7EBF;&#x7A7F;&#x8FC7;&#x7684;&#x5BF9;&#x8C61;&#x6211;&#x4EEC;&#x653E;&#x5728;&#x5217;&#x8868;C&#x4E2D;&#x3002;<br>
+<img src="https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-11639700-1389661386.png" alt="&#x7A7A;&#x95F4;&#x5212;&#x5206;_fig01"></p>
+<p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x786E;&#x5B9A;&#xFF0C;ListA&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x4E0D;&#x53EF;&#x80FD;&#x4E0E;ListB&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x76F8;&#x4EA4;&#xFF0C;&#x6545;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x8981;&#x5BF9;AB&#x5217;&#x8868;&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x5404;&#x81EA;&#x6C42;&#x4EA4;&#xFF0C;&#x4EE5;&#x53CA;ListC&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x4E0E;A&#x548C;B&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x6C42;&#x4EA4;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x95EE;&#x9898;&#x6765;&#x4E86;&#xFF0C;&#x5982;&#x679C;&#x5BF9;&#x8C61;&#x4E0D;&#x5747;&#x5300;&#xFF0C;&#x6BD4;&#x5982;&#x6240;&#x6709;&#x5BF9;&#x8C61;&#x5168;&#x90FD;&#x805A;&#x96C6;&#x5728;&#x7A7A;&#x95F4;&#x7684;&#x5DE6;&#x534A;&#x8FB9;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x4E48;&#x505A;&#x7A7A;&#x95F4;&#x5212;&#x5206;&#x4E5F;&#x65E0;&#x6D4E;&#x4E8E;&#x4E8B;&#x3002;&#x8FD8;&#x6709;&#x5BF9;&#x8C61;&#x5982;&#x679C;&#x6BCF;&#x5E27;&#x90FD;&#x5728;&#x79FB;&#x52A8;&#x4E14;&#x8D8B;&#x52BF;&#x65E0;&#x6CD5;&#x9884;&#x6D4B;&#xFF0C;&#x96BE;&#x9053;&#x6BCF;&#x4E00;&#x5E27;&#x90FD;&#x8981;&#x751F;&#x6210;&#x4E00;&#x68F5;&#x6811;&#x5417;&#xFF1F;</p>
+<h4 class="mume-header" id="31-%E8%A6%81%E4%B8%8D%E8%A6%81%E8%BF%9B%E8%A1%8C%E5%88%86%E5%89%B2%E6%80%8E%E4%B9%88%E8%BF%9B%E8%A1%8C%E5%88%86%E5%89%B2">3.1 <strong>&#x8981;&#x4E0D;&#x8981;&#x8FDB;&#x884C;&#x5206;&#x5272;&#xFF1F;&#x600E;&#x4E48;&#x8FDB;&#x884C;&#x5206;&#x5272;&#xFF1F;</strong></h4>
+
+<p>&#x8981;&#x4E0D;&#x8981;&#x8FDB;&#x884C;&#x5206;&#x5272;&#x7684;&#x51C6;&#x5219;&#x662F;:&#x5206;&#x5272;&#x662F;&#x5426;&#x51CF;&#x5C11;&#x4E86;&#x78B0;&#x649E;&#x68C0;&#x6D4B;&#x7684;&#x6B21;&#x6570;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4E3A;&#x6BCF;&#x4E2A;&#x5BF9;&#x8C61;&#x521B;&#x9020;&#x4E00;&#x4E2A;&#x5B8C;&#x7F8E;&#x7684;&#x5305;&#x56F4;&#x7A7A;&#x95F4;&#x3002;</p>
+<p>&#x662F;&#x5426;&#x8981;&#x7EE7;&#x7EED;&#x8FDB;&#x884C;&#x5206;&#x5272;&#x7684;&#x51C6;&#x5219;:</p>
+<ol>
+<li>&#x521B;&#x9020;&#x7684;&#x65B0;&#x7684;&#x5206;&#x652F;&#x82E5;&#x53EA;&#x542B;&#x6709;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x9700;&#x8981;&#x518D;&#x8FDB;&#x884C;&#x5206;&#x5272;&#x3002;(&#x8FD9;&#x6761;&#x89C4;&#x5219;&#x4F1A;&#x88AB;&#x7528;&#x4E8E;&#x516B;&#x53C9;&#x6811;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x5B9A;&#x4E49;)</li>
+<li>&#x8BBE;&#x7F6E;&#x6700;&#x5C0F;&#x5206;&#x5272;&#x5C3A;&#x5BF8;&#x3002;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x8C03;&#x7528;&#x7684;&#x6808;&#x5185;&#x5B58;&#x6EA2;&#x51FA;&#xFF0C;&#x518D;&#x5206;&#x9694;&#x5230;&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;&#x7684;&#x7A7A;&#x95F4;&#x540E;&#xFF0C;&#x505C;&#x6B62;&#x7EE7;&#x7EED;&#x5206;&#x5272;&#xFF0C;&#x6700;&#x5C0F;&#x5C3A;&#x5BF8;&#x5185;&#x7684;&#x5BF9;&#x8C61;&#x53EA;&#x80FD;&#x7528;<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>N</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(N^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.0641em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal" style="margin-right:0.10903em;">N</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span>&#x7684;&#x66B4;&#x529B;&#x68C0;&#x6D4B;&#x65B9;&#x6CD5;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x533A;&#x57DF;&#x5185;&#x4E0D;&#x5305;&#x542B;&#x4EFB;&#x4F55;&#x5BF9;&#x8C61;&#xFF0C;&#x5219;&#x4E0D;&#x628A;&#x8FD9;&#x5757;&#x533A;&#x57DF;&#x653E;&#x5165;&#x6811;&#x4E2D;&#x3002;<br>
+&#x5982;&#x679C;&#x4EE5;&#x4E0A;&#x8FF0;&#x89C4;&#x5219;&#x4E3A;&#x4F9D;&#x636E;&#xFF0C;&#x4E3A;&#x4E8C;&#x7EF4;&#x573A;&#x666F;&#x8FDB;&#x884C;&#x5212;&#x5206;&#xFF0C;&#x7ED3;&#x679C;&#x5982;&#x4E0B;&#x56FE;<br>
+<img src="https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-51009600-1389735662.png" alt="&#x56DB;&#x53C9;&#x6811;"></li>
+</ol>
+<h4 class="mume-header" id="32-%E5%85%AB%E5%8F%89%E6%A0%91%E7%AE%80%E4%BB%8B">3.2 <strong>&#x516B;&#x53C9;&#x6811;&#x7B80;&#x4ECB;</strong></h4>
+
+<p>&#x6240;&#x4EE5;&#x901A;&#x8FC7;&#x4E0A;&#x9762;&#x4E8C;&#x7EF4;&#x5E73;&#x9762;&#x7684;&#x56DB;&#x53C9;&#x6811;&#x63A8;&#x5BFC;&#xFF0C;&#x6211;&#x4EEC;&#x73B0;&#x5728;&#x9700;&#x8981;&#x628A;&#x7406;&#x8BBA;&#x63A8;&#x5E7F;&#x5230;&#x4E09;&#x7EF4;&#x7A7A;&#x95F4;&#x4E2D;&#x53BB;<br>
+&#x4E0B;&#x9762;&#x662F;GameDev&#x4E0A;&#x5BF9;&#x8282;&#x70B9;&#x7C7B;&#x7684;&#x63CF;&#x8FF0;&#x4E0E;&#x6E90;&#x7801;</p>
+<ol>
+<li>Each node has a bounding region which defines the enclosing region</li>
+<li>Each node has a reference to the parent node</li>
+<li>Contains an array of eight child nodes (use arrays for code simplicity and cache performance)</li>
+<li>Contains a list of objects contained within the current enclosing region</li>
+<li>I use a byte-sized bitmask for figuring out which child nodes are actively being used (the optimization benefits at the cost of additional complexity is somewhat debatable)</li>
+<li>I use a few static variables to indicate the state of the tree</li>
+</ol>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code>public class OctTree
+{ 
+	BoundingBox m_region;
+	List m_objects; 
+	/// 
+	/// These are items which we&apos;re waiting to insert into the data structure. 
+	/// We want to accrue as many objects in here as possible before we inject them into the tree. This is slightly more cache friendly. 
+	/// 
+	
+	static Queue m_pendingInsertion = new Queue(); 
+	
+	/// 
+	/// These are all of the possible child octants for this node in the tree. 
+	/// 
+	OctTree[] m_childNode = new OctTree[8]; 
+	
+	///
+	/// This is a bitmask indicating which child nodes are actively being used. 
+	/// It adds slightly more complexity, but is faster for performance since there is only one comparison instead of 8. 
+	///
+	byte m_activeNodes = 0;
+	
+	///
+	/// The minumum size for enclosing region is a 1x1x1 cube. 
+	///
+	const int MIN_SIZE = 1; 
+	
+	///
+	/// this is how many frames we&apos;ll wait before deleting an empty tree branch. Note that this is not a constant. The maximum lifespan doubles
+	/// every time a node is reused, until it hits a hard coded constant of 64 
+	/// 
+	int m_maxLifespan = 8; // 
+	int m_curLife = -1; //this is a countdown time showing how much time we have left to live 
+	
+	/// 
+	/// A reference to the parent node is nice to have when we&apos;re trying to do a tree update. 
+	/// 
+	OctTree _parent; 
+	static bool m_treeReady = false; //the tree has a few objects which need to be inserted before it is complete 
+	static bool m_treeBuilt = false; //there is no pre-existing tree yet. 
+}
+</code></pre><h4 class="mume-header" id="33-init">3.3 <code>Init()</code></h4>
+
+<ol>
+<li>&#x786E;&#x8BA4;&#x6574;&#x68F5;&#x6811;&#x6240;&#x5305;&#x542B;&#x7684;&#x8303;&#x56F4;&#x3002;&#x5728;&#x521D;&#x59CB;&#x5316;&#x6574;&#x68F5;&#x6811;&#x6240;&#x5305;&#x56F4;&#x7684;&#x7A7A;&#x95F4;&#x65F6;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x505A;&#x51FA;&#x4E0B;&#x9762;&#x4E24;&#x6761;&#x8BBE;&#x8BA1;&#x51B3;&#x7B56;</li>
+</ol>
+<ul>
+<li>&#x5728;&#x5BF9;&#x8C61;&#x8D85;&#x51FA;&#x6240;&#x5305;&#x542B;&#x7684;&#x8303;&#x56F4;&#x65F6;&#xFF0C;&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x600E;&#x4E48;&#x505A;</li>
+<li>&#x6211;&#x4EEC;&#x5E94;&#x8BE5;&#x628A;&#x5305;&#x56F4;&#x7684;&#x7A7A;&#x95F4;&#x5B9A;&#x4E49;&#x6210;&#x4EC0;&#x4E48;&#x6837;</li>
+</ul>
+<p>GamDev&#x4E0A;&#x63D0;&#x4F9B;&#x7684;&#x6784;&#x9020;&#x51FD;&#x6570;&#xFF1A;</p>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code>private OctTree(BoundingBox region, List objList) 
+{ 
+	m_region = region; 
+	m_objects = objList; 
+	m_curLife = -1; 
+} 
+
+public OctTree() 
+{ 
+	m_objects = new List(); 
+	m_region = new BoundingBox(Vector3.Zero, Vector3.Zero); 
+	m_curLife = -1; 
+}
+
+public OctTree(BoundingBox region) 
+{ 
+	m_region = region;
+	m_objects = new List(); 
+	m_curLife = -1; 
+} 
+</code></pre><p>&#x7531;&#x4E8E;&#x4E0B;&#x6587;&#x6D89;&#x53CA;&#x5230;BoundingBox&#x7684;&#x5E94;&#x7528;&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x91CC;&#x7ED9;&#x51FA;&#x300A;Character Animation With Direct3D&#x300B;(&#x8FD9;&#x672C;&#x4E66;&#x5728;&#x6211;&#x7684;icloud&#x91CC;&#x9762;&#x6709;),&#x4E2D;&#x7ED9;&#x51FA;&#x7684;AABB&#x7C7B;&#x7684;&#x5B9A;&#x4E49;&#x3002;&#x4E0B;&#x56FE;&#x4E2D;&#x84DD;&#x8272;&#x7684;&#x5411;&#x91CF;&#x8868;&#x793A;&#x4E24;&#x4E2A;&#x4F4D;&#x4E8E;&#x4F53;&#x5BF9;&#x89D2;&#x7EBF;&#x4E0A;&#x7684;&#x4E24;&#x4E2A;&#x70B9;&#x76F8;&#x51CF;&#xFF0C;<code>Vector3 dimensions = m_region.MAX - m_region.MIN</code>&#x4ECE;&#x800C;&#x5F97;&#x51FA;<code>dimensions</code>&#x3002;<br>
+<img src="AABB%E4%BD%93%E5%AF%B9%E8%A7%92%E7%BA%BF.png" alt="AABB_max-_min"></p>
+<pre data-role="codeBlock" data-info="C++" class="language-cpp"><span class="token keyword keyword-class">class</span> <span class="token class-name">AABB</span>
+<span class="token punctuation">{</span>
+<span class="token keyword keyword-public">public</span><span class="token operator">:</span>
+	<span class="token function">AABB</span><span class="token punctuation">(</span>D3DXVECTOR3 max<span class="token punctuation">,</span> D3DVECTOR3 min<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		m_max <span class="token operator">=</span> max<span class="token punctuation">;</span>
+		m_min <span class="token operator">=</span> min<span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>	
+
+	<span class="token keyword keyword-bool">bool</span> <span class="token function">Intersect</span><span class="token punctuation">(</span>D3DVECTOR3 <span class="token operator">&amp;</span>P<span class="token punctuation">)</span>
+	<span class="token punctuation">{</span>
+		<span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>x <span class="token operator">&lt;</span> m_min<span class="token punctuation">.</span>x <span class="token operator">||</span> p<span class="token punctuation">.</span>x <span class="token operator">&gt;</span> m_max<span class="token punctuation">.</span>x<span class="token punctuation">)</span><span class="token keyword keyword-return">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>y <span class="token operator">&lt;</span> m_min<span class="token punctuation">.</span>y <span class="token operator">||</span> p<span class="token punctuation">.</span>y <span class="token operator">&gt;</span> m_max<span class="token punctuation">.</span>y<span class="token punctuation">)</span><span class="token keyword keyword-return">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token keyword keyword-if">if</span><span class="token punctuation">(</span>p<span class="token punctuation">.</span>z <span class="token operator">&lt;</span> m_min<span class="token punctuation">.</span>z <span class="token operator">||</span> p<span class="token punctuation">.</span>z <span class="token operator">&gt;</span> m_max<span class="token punctuation">.</span>z<span class="token punctuation">)</span><span class="token keyword keyword-return">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+		<span class="token keyword keyword-return">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+	<span class="token punctuation">}</span>
+
+<span class="token keyword keyword-public">public</span><span class="token operator">:</span>
+	<span class="token comment">/*
+	* &#x8FD9;&#x91CC;&#x7684;m_max,m_min &#x4E0E;&#x4E0B;&#x6587;&#x4E2D;&#x7684;m_region.MAX,m_region.MIN&#x5BF9;&#x5E94;
+	* m_max&#x4E0E;m_min&#x5206;&#x522B;&#x4EE3;&#x8868;&#x4F53;&#x5BF9;&#x89D2;&#x7EBF;&#x7684;&#x4E24;&#x4E2A;&#x70B9;
+	*/</span>
+	D3DVECTOR3 m_max<span class="token punctuation">,</span>m_min<span class="token punctuation">;</span> 
+<span class="token punctuation">}</span>
+</pre><ol start="2">
+<li>&#x8981;&#x4E86;&#x89E3;<a href="https://en.wikipedia.org/wiki/Lazy_initialization#C#">Lazy initialization</a>&#x3002;&#x8981;&#x5C3D;&#x91CF;&#x62D6;&#x5EF6;&#x5185;&#x5B58;&#x7684;&#x5206;&#x914D;&#x548C;&#x6784;&#x9020;&#x6811;&#xFF0C;&#x77E5;&#x9053;&#x6211;&#x4EEC;&#x4E0D;&#x5F97;&#x4E0D;&#x53BB;&#x505A;&#x8FD9;&#x4EF6;&#x7684;&#x65F6;&#x5019;&#x3002;&#x6BD4;&#x5982;&#x679C;&#x8BF4;&#x5728;&#x7528;&#x6237;&#x53D1;&#x51FA;&#x624B;&#x52A8;&#x63D2;&#x5165;&#x8282;&#x70B9;&#x7684;&#x8BF7;&#x6C42;&#x3002;</li>
+</ol>
+<h4 class="mume-header" id="34-buildtree">3.4 <code>BuildTree()</code></h4>
+
+<p>&#x5728;&#x8C03;&#x7528;<code>OctTree(BoundingBox region, List objList)</code>&#x540E;&#x80FD;&#x591F;&#x786E;&#x5B9A;&#x4E86;&#x8981;&#x8FDB;&#x884C;&#x7A7A;&#x95F4;&#x5212;&#x5206;&#x7684;&#x7A7A;&#x95F4;&#x548C;&#x5728;&#x7A7A;&#x95F4;&#x4E2D;&#x7684;&#x5BF9;&#x8C61;&#x5217;&#x8868;&#x3002;<br>
+&#x5F00;&#x59CB;&#x6B63;&#x5F0F;&#x6784;&#x5EFA;OctTree&#x7684;&#x903B;&#x8F91;&#x6B65;&#x9AA4;</p>
+<ol>
+<li>&#x5224;&#x65AD;&#x5F53;&#x524D;&#x8981;&#x751F;&#x6210;&#x7684;&#x8282;&#x70B9;&#x662F;&#x5426;&#x4E3A;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x3002;</li>
+</ol>
+<pre data-role="codeBlock" data-info="c#" class="language-c#"><code>// &#x4E0A;&#x6587;&#x6709;&#x8BF4;&#x660E;&#x516B;&#x53C9;&#x6811;&#x53F6;&#x5B50;&#x8282;&#x70B9;&#x7684;&#x5B9A;&#x4E49;
+if (m_objects.Count &lt;= 1)
+	return;
+</code></pre><ol start="2">
+<li>&#x83B7;&#x53D6;&#x5728;&#x521D;&#x59CB;&#x5316;&#x65F6;(&#x8C03;&#x7528;&#x6784;&#x9020;&#x51FD;&#x6570;&#x65F6;)&#x4F20;&#x5165;&#x7684;<code>objList</code>&#x4E0E;<code>region</code>&#xFF0C;&#x5206;&#x522B;&#x83B7;&#x53D6;&#x573A;&#x666F;&#x4E2D;&#x6240;&#x5305;&#x542B;&#x7684;&#x5BF9;&#x8C61;&#x548C;&#x573A;&#x666F;&#x7684;&#x5927;&#x5C0F;&#x3002;</li>
+</ol>
+<pre data-role="codeBlock" data-info="c#" class="language-c#"><code>Vector3 dimensions = m_region.MAX - m_region.MIN;
+
+// &#x82E5;&#x6784;&#x9020;&#x65F6;&#x6CA1;&#x6709;&#x4F20;&#x5165;region
+if (dimensions == Vector3.Zero)
+{
+	// To create a cube which perfect encloses every single object in the game world.
+	FindEnclosingCube(); 
+
+	dimensions = m_region.Max - m_region.Min;
+}
+
+// &#x8BB0;&#x4F4F;&#x8981;&#x68C0;&#x67E5;&#x521B;&#x9020;&#x51FA;&#x7684;box&#x662F;&#x5426;&#x7B26;&#x5408;&#x4E0A;&#x9762;&#x89C4;&#x5B9A;&#x7684;MIN_SIZE
+if (dimensions.X &lt;= MIN_SIZE &amp;&amp; dimensions.Y &lt;= MIN_SIZE &amp;&amp; dimensions.Z &lt;=MIN_SIZE)
+{
+	return;
+}
+</code></pre><ol start="3">
+<li>&#x5206;&#x5272;&#x7A7A;&#x95F4;<font size="1">(&#x4E0B;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x5BF9;&#x5212;&#x5206;&#x540E;&#x7A7A;&#x95F4;&#x6240;&#x5BF9;&#x5E94;&#x7684;BoundingBox&#x8FDB;&#x884C;&#x5B9A;&#x4E49;&#xFF0C;&#x7406;&#x89E3;&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x96BE;&#x5EA6;&#xFF0C;&#x5C31;&#x4E0D;&#x591A;&#x505A;&#x4ECB;&#x7ECD;&#x3002;)</font></li>
+</ol>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code>Vector3 half = dimensions/2.0f;
+Vector3 center = m_region.Min + half;
+BoundingBox[] octant = new BoundingBox[8];
+
+octant[0] = new BoundingBox(m_region.Min,center); // &#x5DE6;&#x4E0B;&#x89D2;
+octant[1] = new BoundingBox(new Vector3(center.X, m_region.Min.Y, m_region.Min.Z), new Vector3(m_region.Max.X, center.Y, center.Z));
+octant[2] = new BoundingBox(new Vector3(center.X, m_region.Min.Y, center.Z), new Vector3(m_region.Max.X, center.Y, m_region.Max.Z));
+octant[3] = new BoundingBox(new Vector3(m_region.Min.X, m_region.Min.Y, center.Z), new Vector3(center.X, center.Y, m_region.Max.Z));
+octant[4] = new BoundingBox(new Vector3(m_region.Min.X, center.Y, m_region.Min.Z), new Vector3(center.X, m_region.Max.Y, center.Z));
+octant[5] = new BoundingBox(new Vector3(center.X, center.Y, m_region.Min.Z), new Vector3(m_region.Max.X, m_region.Max.Y, center.Z));
+octant[6] = new BoundingBox(center, m_region.Max);
+octant[7] = new BoundingBox(new Vector3(m_region.Min.X, center.Y, center.Z), new Vector3(center.X, m_region.Max.Y, m_region.Max.Z));
+</code></pre><ol start="4">
+<li>&#x5206;&#x914D;&#x5BF9;&#x8C61;&#x81F3;&#x8282;&#x70B9;<br>
+&#x5206;&#x914D;&#x8FC7;&#x7A0B;&#x4F7F;&#x7528;&#x5230;&#x4E09;&#x4E2A;&#x5BB9;&#x5668;&#xFF0C;&#x5206;&#x522B;&#x662F;<code>m_object</code> <code>octList</code> <code>deList</code>&#xFF0C;<code>m_object</code>&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x6240;&#x6709;<code>m_region</code>&#x4E2D;&#x6240;&#x5305;&#x542B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;<code>octList</code>&#x4E2D;&#x5305;&#x542B;&#x4E86;&#x8BE5;&#x8282;&#x70B9;&#x4E0B;&#x6240;&#x5305;&#x542B;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;<code>deList</code>&#x662F;&#x4E00;&#x4E2A;&#x4E2D;&#x95F4;&#x5BB9;&#x5668;&#xFF0C;&#x8BB0;&#x5F55;&#x5C06;&#x8981;&#x4ECE;m_object&#x4E2D;&#x5254;&#x9664;&#x7684;&#x5BF9;&#x8C61;&#x3002;</li>
+</ol>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code>// &#x904D;&#x5386;m_object
+foreach (Physical obj in m_objects)
+{
+	if (obj.BoundingBox.Min != obj.BoundingBox.Max)
+	{
+		for (int a = 0; a &lt; 8; a++)
+		{
+			// &#x82E5;&#x8FD9;&#x4E2A;&#x5BF9;&#x8C61;&#x88AB;&#x5BF9;&#x5E94;octant&#x5305;&#x542B;&#xFF0C;&#x5219;&#x653E;&#x5165;octList&#x548C;deList&#x4E2D;&#xFF0C;&#x5E76;&#x5F00;&#x59CB;&#x5F00;&#x59CB;&#x68C0;&#x6D4B;&#x4E0B;&#x4E00;&#x4E2A;m_object&#x4E2D;&#x7684;&#x5BF9;&#x8C61;
+			if (octant[a].Contains(obj.BoundingBox) == ContainmentType.Contains)
+			{
+				octList[a].Add(obj);
+				delist.Add(obj);
+				break;
+			}
+		}
+	}
+</code></pre><p>&#x5728;&#x5B8C;&#x6210;<code>octList</code>&#x6784;&#x5EFA;&#x540E;&#xFF0C;&#x4ECE;<code>m_object</code>&#x4E2D;&#x5254;&#x9664;disList&#x4E2D;&#x8BB0;&#x5F55;&#x7684;&#x5BF9;&#x8C61;</p>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code>foreach (Physical obj in delist)
+	m_objects.Remove(obj);
+</code></pre><p>&#x4E0A;&#x8FF0;&#x6B65;&#x9AA4;&#x5DF2;&#x7ECF;&#x9610;&#x8FF0;&#x6E05;&#x695A;&#x6811;&#x8282;&#x70B9;&#x7684;&#x6784;&#x5EFA;&#x903B;&#x8F91;&#xFF0C;&#x63A5;&#x4E0B;&#x6765;&#x9700;&#x8981;&#x4F7F;&#x7528;&#x76F8;&#x540C;&#x903B;&#x8F91;&#x8FDB;&#x884C;&#x8FED;&#x4EE3;&#xFF0C;&#x7EE7;&#x7EED;&#x5411;&#x4E0B;&#x751F;&#x6210;&#x6811;<br>
+&#x6CE8;&#x610F;&#x7406;&#x89E3;<code>CreateNode()</code>&#x65B9;&#x6CD5;&#x5B58;&#x5728;&#x7684;&#x5FC5;&#x8981;&#x6027;&#xFF0C;&#x7406;&#x89E3;<code>m_activeNodes</code>&#x3002;</p>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code>{
+	// ......
+	// &#x5B8C;&#x6210;&#x521B;&#x5EFA;&#x7236;&#x8282;&#x70B9;
+
+	// &#x5F00;&#x59CB;&#x8FED;&#x4EE3;&#x521B;&#x5EFA;&#x5B50;&#x8282;&#x70B9;
+	for (int a = 0; a &lt; 8; a++)
+	{
+		if (octList[a].Count != 0)
+		{
+			m_childNode[a] = CreateNode(octant[a], octList[a]);
+			m_activeNodes |= (byte)(1 &lt;&lt; a);
+			m_childNode[a].BuildTree();
+		}
+	}
+	
+	m_treeBuilt = true;
+	m_treeReady = true;
+}
+
+// &#x5408;&#x6CD5;&#x6027;&#x68C0;&#x6D4B;
+private OctTree CreateNode(BoundingBox region, List objList) //complete &amp; tested
+{
+	if (objList.Count == 0)
+		return null;
+	OctTree ret = new OctTree(region, objList);
+	ret._parent = this;
+	return ret;
+}
+</code></pre><h4 class="mume-header" id="35-update">3.5 <code>Update()</code></h4>
+
+<h5 class="mume-header" id="%E5%AE%9E%E7%8E%B0%E9%80%BB%E8%BE%91">&#x5B9E;&#x73B0;&#x903B;&#x8F91;</h5>
+
+<p>&#x56DE;&#x5934;&#x770B;&#x770B;&#x6211;&#x4EEC;&#x7684;&#x9700;&#x6C42;&#xFF0C;&#x8981;&#x6C42;&#x6BCF;&#x4E00;&#x5E27;&#x90FD;&#x9700;&#x8981;&#x77E5;&#x9053;&#x573A;&#x666F;&#x5185;&#x5BF9;&#x8C61;&#x7684;&#x76F8;&#x4EA4;&#x60C5;&#x51B5;&#xFF0C;&#x6545;&#x80AF;&#x5B9A;&#x9700;&#x8981;&#x6211;&#x4EEC;&#x7684;&#x6811;&#x5728;&#x6BCF;&#x4E00;&#x5E27;&#x5BF9;&#x6811;&#x8FDB;&#x884C;&#x66F4;&#x65B0;&#x3002;</p>
+<p>&#x73B0;&#x5728;&#x6709;&#x4E24;&#x4E2A;&#x65B9;&#x6848;&#xFF1A;</p>
+<ul>
+<li>&#x5C06;&#x4E0A;&#x4E00;&#x5E27;&#x7684;&#x6240;&#x6784;&#x5EFA;&#x7684;&#x6811;&#x4E22;&#x5F03;&#xFF0C;&#x6BCF;&#x4E00;&#x5E27;&#x91CD;&#x65B0;&#x751F;&#x6210;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x6811;</li>
+<li>&#x4EE5;&#x4E0A;&#x4E00;&#x5E27;&#x6240;&#x6784;&#x5EFA;&#x7684;&#x6811;&#x4E3A;&#x57FA;&#x7840;&#xFF0C;&#x4EE5;&#x8FD9;&#x4E00;&#x5E27;&#x5BF9;&#x8C61;&#x7684;&#x4F4D;&#x7F6E;&#x4E3A;&#x4F9D;&#x636E;&#xFF0C;&#x5BF9;&#x6811;&#x7684;&#x5206;&#x652F;&#x8FDB;&#x884C;&#x66F4;&#x65B0;</li>
+</ul>
+<p>&#x5982;&#x679C;&#x53EA;&#x662F;&#x6570;&#x91CF;&#x8F83;&#x5C11;&#x7684;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x4E86;&#x8FD0;&#x52A8;&#xFF0C;&#x9009;&#x62E9;&#x53BB;&#x6784;&#x5EFA;&#x6574;&#x9897;&#x6811;&#x4F1A;&#x82B1;&#x8D39;&#x592A;&#x591A;&#x7684;&#x6027;&#x80FD;&#x53BB;&#x6784;&#x5EFA;&#x4E00;&#x9897;&#x5927;&#x90E8;&#x5206;&#x5206;&#x652F;&#x90FD;&#x91CD;&#x590D;&#x7684;&#x6811;&#xFF0C;&#x6216;&#x8BB8;&#x5728;&#x5B9E;&#x9645;&#x9879;&#x76EE;&#x4E2D;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x5C06;<strong>&#x4E24;&#x79CD;&#x65B9;&#x6848;&#x6DF7;&#x5408;&#x4F7F;&#x7528;</strong>&#xFF0C;&#x4F46;&#x5728;&#x8FD9;&#x91CC;&#x6211;&#x4EEC;&#x7740;&#x91CD;&#x4ECB;&#x7ECD;&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6848;&#x3002;</p>
+<p>&#x7B2C;&#x4E8C;&#x79CD;&#x65B9;&#x6848;&#x80FD;&#x591F;&#x4F7F;&#x7528;&#x4E0A;&#x8FF0;<a href="#2%E5%B8%B8%E8%A7%84%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF">&#x5E38;&#x89C4;&#x4F18;&#x5316;&#x601D;&#x8DEF;</a>&#x4E2D;&#x521B;&#x5EFA;&#x52A8;&#x9759;&#x5217;&#x8868;&#x7684;&#x5904;&#x7406;&#x65B9;&#x6CD5;&#xFF0C;&#x53EA;&#x5173;&#x6CE8;&#x5305;&#x56F4;&#x76D2;&#x53D1;&#x751F;&#x53D8;&#x5316;&#x7684;&#x5BF9;&#x8C61;&#xFF0C;&#x5E76;&#x5BF9;&#x90A3;&#x4E9B;&#x5BF9;&#x8C61;&#x8FDB;&#x884C;&#x64CD;&#x4F5C;&#xFF0C;&#x4E0B;&#x9762;&#x7B80;&#x8FF0;&#x64CD;&#x4F5C;&#x6B65;&#x9AA4;&#x3002;</p>
+<ol>
+<li>
+<p>&#x521B;&#x5EFA;&#x4E00;&#x4E2A;&#x5217;&#x8868;&#xFF0C;&#x8BB0;&#x5F55;&#x6240;&#x6709;&#x5305;&#x56F4;&#x76D2;&#x7684;&#x4F4D;&#x7F6E;&#x4E0E;&#x5927;&#x5C0F;&#x53D1;&#x751F;&#x6539;&#x53D8;&#x7684;&#x5BF9;&#x8C61;&#x3002;<font size="2">&#xFF08;&#x4F9D;&#x7136;&#x9700;&#x8981;&#x904D;&#x5386;&#x6240;&#x6709;&#x8282;&#x70B9;&#xFF0C;&#x8FD9;&#x91CC;&#x662F;&#x5426;&#x6709;&#x4F18;&#x5316;&#x7A7A;&#x95F4;?&#xFF09;</font></p>
+</li>
+<li>
+<p>&#x6BCF;&#x4E2A;&#x5BF9;&#x8C61;&#x9996;&#x5148;&#x5224;&#x65AD;&#x662F;&#x5426;&#x4F9D;&#x7136;&#x5B58;&#x5728;&#x4E8E;&#x5F53;&#x524D;&#x7684;&#x8282;&#x70B9;&#x7684;&#x5305;&#x56F4;&#x76D2;&#xFF0C;&#x7136;&#x540E;&#x518D;&#x5411;&#x4E0A;&#x904D;&#x5386;&#xFF0C;&#x5224;&#x65AD;&#x81EA;&#x5DF1;&#x5904;&#x4E8E;&#x54EA;&#x4E2A;&#x5305;&#x56F4;&#x76D2;&#x3002;<br>
+&#x7531;&#x4E8E;&#x6BCF;&#x4E2A;&#x8282;&#x70B9;&#x90FD;&#x50A8;&#x5B58;&#x7236;&#x7EA7;&#x8282;&#x70B9;&#x7684;&#x5730;&#x5740;&#xFF0C;&#x6240;&#x4EE5;&#x80FD;&#x591F;&#x5F88;&#x8F7B;&#x677E;&#x7684;&#x5B8C;&#x6210;&#x5411;&#x4E0A;&#x904D;&#x5386;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
+</li>
+</ol>
+<h5 class="mume-header" id="%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96">&#x6027;&#x80FD;&#x4F18;&#x5316;</h5>
+
+<p>&#x4E0A;&#x9762;&#x7684;&#x6B65;&#x9AA4;&#x6D89;&#x53CA;&#x5BF9;&#x8C61;&#x5728;&#x6811;&#x4E2D;&#x5411;&#x4E0A;&#x79FB;&#x52A8;&#xFF0C;&#x9700;&#x8981;&#x6CE8;&#x610F;&#x7684;&#x662F;&#x82E5;&#x53EA;&#x8003;&#x8651;&#x5411;&#x4E0A;&#x79FB;&#x52A8;&#xFF0C;&#x968F;&#x7740;&#x7A0B;&#x5E8F;&#x8FD0;&#x884C;&#xFF0C;&#x8D8A;&#x6765;&#x8D8A;&#x591A;&#x7684;&#x5BF9;&#x8C61;&#x4F1A;&#x805A;&#x96C6;&#x5728;&#x6811;&#x7684;&#x6839;&#x8282;&#x70B9;&#x9644;&#x8FD1;&#xFF0C;&#x5BFC;&#x81F4;&#x6027;&#x80FD;&#x6025;&#x5267;&#x4E0B;&#x964D; <font size="2">(<code>m_region</code>&#x5185;&#x7684;&#x5BF9;&#x8C61;&#x6570;&#x91CF;&#x589E;&#x591A;&#xFF0C;&#x5BFC;&#x81F4;&#x8BA1;&#x7B97;&#x91CF;&#x5267;&#x589E;)</font> &#xFF0C;&#x6240;&#x4EE5;&#x5728;&#x5B9E;&#x73B0;<code>Update()</code>&#x7684;&#x65F6;&#x5019;&#x4F9D;&#x7136;&#x8981;&#x8003;&#x8651;&#x91CD;&#x65B0;&#x6784;&#x9020;&#x65B0;&#x7684;&#x5206;&#x652F;&#xFF0C;&#x5373;&#x8282;&#x70B9;&#x5411;&#x4E0B;&#x79FB;&#x52A8;&#x3002;&#x8FD9;&#x5C31;&#x6D89;&#x53CA;&#x5230;<strong>&#x6811;&#x5206;&#x652F;&#x7684;&#x589E;&#x52A0;&#x4E0E;&#x5254;&#x9664;</strong>&#xFF0C;&#x5373;<strong>&#x5185;&#x5B58;&#x7684;&#x7533;&#x8BF7;&#x4E0E;&#x91CA;&#x653E;</strong>&#x3002;&#x8FD9;&#x53C8;&#x662F;&#x4E00;&#x4E2A;&#x5F88;&#x6740;&#x6027;&#x80FD;&#x7684;&#x64CD;&#x4F5C;&#xFF0C;&#x5728;&#x5B9E;&#x73B0;&#x4E2D;&#x5C24;&#x5176;&#x6CE8;&#x610F;&#x8FD9;&#x4E9B;&#x8017;&#x8D39;&#x6027;&#x80FD;&#x7684;&#x4E0D;&#x8D77;&#x773C;&#x64CD;&#x4F5C;&#xFF0C;&#x56E0;&#x4E3A;&#x6211;&#x4EEC;&#x662F;<strong>&#x9010;&#x5E27;</strong>&#x8C03;&#x7528;&#x3002;</p>
+<p>&#x5BF9;&#x8C61;&#x7684;&#x8FD0;&#x52A8;&#x662F;&#x4E0D;&#x53EF;&#x63A7;&#x7684;&#xFF0C;&#x4F46;&#x53C8;&#x4E0D;&#x80FD;&#x9891;&#x7E41;&#x7533;&#x8BF7;&#x4E0E;&#x91CA;&#x653E;&#x5185;&#x5B58;&#x3002;&#x65E2;&#x7136;&#x6211;&#x4EEC;&#x9700;&#x8981;&#x9891;&#x7E41;&#x5BF9;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x8FDB;&#x884C;&#x91CA;&#x653E;&#x4E0E;&#x7533;&#x8BF7;&#x64CD;&#x4F5C;&#xFF0C;&#x90A3;&#x6211;&#x4EEC;&#x4E3A;&#x4EC0;&#x4E48;&#x4E0D;&#x5728;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x5185;&#x6CA1;&#x6709;&#x5BF9;&#x8C61;&#x540E;&#xFF0C;&#x5728;&#x4E00;&#x6BB5;&#x65F6;&#x95F4;&#x5185;&#x4F9D;&#x7136;&#x7EF4;&#x6301;&#x8FD9;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x5B58;&#x5728;&#xFF1F;&#x90A3;&#x6211;&#x4EEC;&#x8BE5;&#x5982;&#x4F55;&#x5F97;&#x77E5;&#x8FD9;&#x4E2A;&#x5185;&#x5B58;&#x7684;&#x4F7F;&#x7528;&#x9891;&#x7387;&#x4EE5;&#x53CA;&#x7EF4;&#x6301;&#x591A;&#x957F;&#x65F6;&#x95F4;&#xFF1F;&#x6211;&#x4EEC;&#x662F;&#x65F6;&#x5019;&#x5BF9;&#x7C7B;<code>OctTree</code>&#x8FDB;&#x884C;&#x6539;&#x9020;&#x4E86;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x7ED9;&#x51FA;&#x5B9E;&#x73B0;<code>Update()</code>&#x65B9;&#x6CD5;&#x7684;&#x53C2;&#x8003;&#x4EE3;&#x7801;</p>
+<pre data-role="codeBlock" data-info="C#" class="language-c#"><code></code></pre><blockquote>
+<p><strong>&#x672A;&#x5B8C;&#x5F85;&#x7EED;</strong></p>
+</blockquote>
+<p><img src="https://www.reactiongifs.us/wp-content/uploads/2013/10/nuh_uh_conan_obrien.gif" alt="2022.6.22"></p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
