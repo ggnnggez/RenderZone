@@ -2,7 +2,9 @@
 
 ### **问题引入**
 现有一个巨大的场景，场景内有数量巨大的GameObject，且每个GameObject的Mesh各不相同。需求是付出能够接受的性能，让我们知道每一帧场景内有哪些GameObject相交。
-![问题附图](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-48142200-1389658066.png)
+|![问题附图](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-48142200-1389658066.png)|
+|:--:|
+| *Fig(1)* 问题附图 |
 
 ### **1.暴力检测**
 ```c#
@@ -28,15 +30,17 @@ foreach(gameObject myObject in ObjList)
 >2. **是否能够减少参与计算碰撞检测的对象？**
    将那些运动确定的且不会与其他对象发生碰撞的对象不做碰撞检测，比如将对象分为静止对象列表与运动对象列表，只对运动对象列表做碰撞检测。
 
->3. **建立碰撞检测的优先级**， 。
+>3. **建立碰撞检测的优先级**
 
 >4. **使用空间划分方法**
 
 
-### **3.基于空间划分方法的检测**<font size = "2">(二分法 => 四叉树 => 八叉树 随着维度的提高，哪些思想没有发生变化，可以尝试提炼出来，总结成解决对应问题的普适模型)</font>
+### **3.基于空间划分方法的检测**<font size = "2">(二分法 => 四叉树 => 八叉树 随着维度的提高，哪些思想没有发生变化，可以尝试提炼出来，总结成解决对应问题的普适模型 :) )</font>
 
 还是上述的那个场景，我们把场景从中间一分为二，根据对象所处的空间，我们可以把对象放入三个列表中，处于左半边的对象放在列表A中，处于右半边的对象放在列表B中，被划分线穿过的对象我们放在列表C中。
-![空间划分_fig01](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-11639700-1389661386.png)
+|![空间划分_fig01](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-11639700-1389661386.png)|
+|:--:|
+|*fig(2)* 空间划分示意图|
 
 我们可以确定，ListA中的对象不可能与ListB中的对象相交，故我们只需要对AB列表中的对象各自求交，以及ListC中的对象与A和B中的对象求交。
 
@@ -50,7 +54,10 @@ foreach(gameObject myObject in ObjList)
 2.  设置最小分割尺寸。为了防止调用的栈内存溢出，再分隔到最小尺寸的空间后，停止继续分割，最小尺寸内的对象只能用$O(N^2)$的暴力检测方法。
 3.  如果区域内不包含任何对象，则不把这块区域放入树中。
 如果以上述规则为依据，为二维场景进行划分，结果如下图
-![四叉树](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-51009600-1389735662.png)
+
+| ![四叉树](https://uploads.gamedev.net/monthly_01_2014/ccs-13892-0-51009600-1389735662.png) |
+|:--:| 
+|*fig(3)* 四叉树示意图|
 
 #### 3.2 **八叉树简介**
 所以通过上面二维平面的四叉树推导，我们现在需要把理论推广到三维空间中去
@@ -134,8 +141,12 @@ public OctTree(BoundingBox region)
 	m_curLife = -1; 
 } 
 ```
-由于下文涉及到BoundingBox的应用，所以这里给出《Character Animation With Direct3D》(这本书在我的icloud里面有),中给出的AABB类的定义。下图中蓝色的向量表示两个位于体对角线上的两个点相减，`Vector3 dimensions = m_region.MAX - m_region.MIN`从而得出`dimensions`。
-![AABB_max-_min](AABB体对角线.png)
+由于下文涉及到BoundingBox的应用，所以这里给出《Character Animation With Direct3D》中的对AABB类的定义。下图中蓝色的向量表示两个位于体对角线上的两个点相减，`Vector3 dimensions = m_region.MAX - m_region.MIN`从而得出`dimensions`。
+
+| ![AABB_max-_min](AABB体对角线.png) | 
+|:--:| 
+| *Fig(4)* AABB的体对角线示意图 |
+
 
 ```C++
 class AABB
@@ -164,7 +175,7 @@ public:
 }
 ```
 
-2. 要了解[Lazy initialization](https://en.wikipedia.org/wiki/Lazy_initialization#C#)。要尽量拖延内存的分配和构造树，知道我们不得不去做这件的时候。比如果说在用户发出手动插入节点的请求。
+1. 要了解[Lazy initialization](https://en.wikipedia.org/wiki/Lazy_initialization#C#)。要尽量拖延内存的分配和构造树，知道我们不得不去做这件的时候。比如果说在用户发出手动插入节点的请求。
 
 #### 3.4 `BuildTree()`
 在调用`OctTree(BoundingBox region, List objList)`后能够确定了要进行空间划分的空间和在空间中的对象列表。
@@ -202,7 +213,7 @@ Vector3 half = dimensions/2.0f;
 Vector3 center = m_region.Min + half;
 BoundingBox[] octant = new BoundingBox[8];
 
-octant[0] = new BoundingBox(m_region.Min,center); // 左下角
+octant[0] = new BoundingBox(m_region.Min,center);
 octant[1] = new BoundingBox(new Vector3(center.X, m_region.Min.Y, m_region.Min.Z), new Vector3(m_region.Max.X, center.Y, center.Z));
 octant[2] = new BoundingBox(new Vector3(center.X, m_region.Min.Y, center.Z), new Vector3(m_region.Max.X, center.Y, m_region.Max.Z));
 octant[3] = new BoundingBox(new Vector3(m_region.Min.X, m_region.Min.Y, center.Z), new Vector3(center.X, center.Y, m_region.Max.Z));
@@ -294,15 +305,74 @@ private OctTree CreateNode(BoundingBox region, List objList) //complete & tested
 上面的步骤涉及对象在树中向上移动，需要注意的是若只考虑向上移动，随着程序运行，越来越多的对象会聚集在树的根节点附近，导致性能急剧下降 <font size = 2>(`m_region`内的对象数量增多，导致计算量剧增)</font> ，所以在实现`Update()`的时候依然要考虑重新构造新的分支，即节点向下移动。这就涉及到**树分支的增加与剔除**，即**内存的申请与释放**。这又是一个很杀性能的操作，在实现中尤其注意这些耗费性能的不起眼操作，因为我们是**逐帧**调用。
 
 对象的运动是不可控的，但又不能频繁申请与释放内存。既然我们需要频繁对这个节点进行释放与申请操作，那我们为什么不在这个节点内没有对象后，在一段时间内依然维持这个节点的存在？那我们该如何得知这个内存的使用频率以及维持多长时间？我们是时候对类`OctTree`进行改造了。
-<!-->
-引入 m_activeNodes m_maxLifespan m_curLife 等属性
-<-->
-下面给出实现`Update()`方法的参考代码
+这里选择引入`curLife`与`maxLifespan`来描述节点的寿命。
+
+| 变量名 | 描述 |
+| :--- | :-----------: |
+| `curLife` | 节点的剩余寿命,即可以这个节点还可以存在多少帧 |
+| `maxLifespan` | 节点的最大剩余寿命 |
+
+下面给出实现`Update()`方法的参考代码:
+
+在方法开头，先以一个节点下是否为空为依据，来打开或是关闭剔除倒计时
 ```C#
+public void Update(coreTime time)
+{
+	if (m_treeBuilt == true && m_treeReady == true)
+	{
+		// 当叶子节点下面有包含任何对象,开始剔除倒计时
+		if (m_object.Count == 0)
+		{
+			if (HasChildren == false)
+			{
+				if(m_curLife == -1)
+					m_curLife == m_maxLifespan;
+				else if (m_curLife > 0)
+				{
+					m_curLife--;
+				}
+			}
+		}
+		else // 用于处理上一帧为空，这一帧又包含了新的对象的情况
+		{
+			if (m_curLife != -1)
+			{
+				// double span
+				if (m_maxLifespan <= 64)
+					m_maxLifespan *= 2;
+
+				// 关闭倒计时
+				m_curLife = -1;
+			}
+		}
+	}
+
+	// ......
+}
 
 ```
 
+在设置好节点的寿命后，申请并更新节点的**运动对象列表**
+
+```C#
+{
+	// ......
+	List<Physical> movedObjects = new List<Physical>(m_objects.Count);
+
+	//go through and update every object in the current tree node
+	foreach (Physical gameObj in m_objects)
+	{
+		//we should figure out if an object actually moved so that we know whether we need to update this node in the tree.
+		if (gameObj.Update(time) == 1)
+		{
+			movedObjects.Add(gameObj);
+		}
+	}
+	//......
+}
+```
+
+<!-->
 > **未完待续**
-
-
 ![2022.6.22](https://www.reactiongifs.us/wp-content/uploads/2013/10/nuh_uh_conan_obrien.gif)
+<-->
